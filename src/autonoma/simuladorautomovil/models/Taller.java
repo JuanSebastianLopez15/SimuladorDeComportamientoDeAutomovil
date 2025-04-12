@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Taller {
-    private final Lector lector;
-    private final Escritor escritor;
+    private Lector lector;
+    private Escritor escritor;
     private static final String ARCHIVO_CONFIG = "/main/resources/autonoma/simuladorautomovil/file/Carro.txt";
 
     public Taller() {
@@ -27,9 +27,6 @@ public class Taller {
         String [] infoLineaMotor = lineaMotor.split(" ");
         String llantas = infoLineaLlanta[1];
         String motor = infoLineaMotor[1];
-        System.out.println(llantas);
-        System.out.println(motor);
-        System.out.println(Llanta.porNombre(llantas));
         if (llantas == null || motor == null) throw new ConfiguracionInvalidaException("Configuración incompleta");
         try {
             return new Vehiculo(Motor.porCilindraje(motor), Llanta.porNombre(llantas));

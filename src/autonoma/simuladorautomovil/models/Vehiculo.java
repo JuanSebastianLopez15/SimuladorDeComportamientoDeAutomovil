@@ -1,8 +1,3 @@
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package autonoma.simuladorautomovil.models;
 
 import autonoma.simuladorautomovil.exception.ApagadoVelocidadAltaException;
@@ -46,14 +41,14 @@ public class Vehiculo {
         }
         vehiculoEncendido = false;
     }
-    public float acelerar(float incrementoVelocidad){
+    public float acelerar(float incrementoVelocidad) throws VehiculoApagadoException{
         if (!vehiculoEncendido) {
             throw new VehiculoApagadoException();
         }
         velocidadActual += incrementoVelocidad;
         return velocidadActual;
     }
-    public float frenar(float decrementoVelocidad){
+    public float frenar(float decrementoVelocidad) throws VehiculoApagadoException, FrenadoEnDetenidoException, FrenadoIntensidadInvalidaException{
         if (!vehiculoEncendido) {
             throw new VehiculoApagadoException();
         }
@@ -69,13 +64,14 @@ public class Vehiculo {
         }
         return velocidadActual;
     }
-    public float frenarBruscamente(){
+    public float frenarBruscamente() throws FrenadoBruscoLlantasException{
         if (velocidadActual > 0) {
             velocidadActual = 0;
             throw new FrenadoBruscoLlantasException();
         }
         return velocidadActual;
     }
+    
     //Setters y getters
     public float getVelocidadActual() {
         return velocidadActual;

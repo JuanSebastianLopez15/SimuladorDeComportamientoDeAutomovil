@@ -1,13 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package autonoma.simuladorautomovil.views;
 
+import autonoma.simuladorautomovil.exception.FrenadoEnDetenidoException;
+import autonoma.simuladorautomovil.exception.FrenadoIntensidadInvalidaException;
 import autonoma.simuladorautomovil.exception.VehiculoApagadoException;
+import autonoma.simuladorautomovil.exception.VehiculoYaApagadoException;
+import autonoma.simuladorautomovil.exception.VehiculoYaEncendidoException;
 import autonoma.simuladorautomovil.models.Taller;
 import autonoma.simuladorautomovil.models.Vehiculo;
 import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -538,27 +545,35 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAcelerarMouseExited
 
     private void btnFrenarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFrenarMouseClicked
-        try{
+        if (this.carro == null){
+            JOptionPane.showMessageDialog(this, "Primero configure las llantas y el motor del carro");
+        }
+        else{
+            try{
             this.carro.frenar(10);
             VentanaFrenar frenar = new VentanaFrenar(this, true);
             this.lblContadorVelocidad.setText(this.carro.getVelocidadActual()+" Km/h");
             frenar.setVisible(true);
-        }catch(Exception e){
+            }catch(VehiculoApagadoException | FrenadoEnDetenidoException | FrenadoIntensidadInvalidaException e){
             JOptionPane.showMessageDialog(this, e.getMessage());
+            }
         }
-        
     }//GEN-LAST:event_btnFrenarMouseClicked
 
     private void btnAcelerarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcelerarMouseClicked
-       try{ 
-            this.carro.acelerar(10);
-            VentanaAcelerar acelerar = new VentanaAcelerar(this, true);
-            this.lblContadorVelocidad.setText(this.carro.getVelocidadActual()+" Km/h");
-            acelerar.setVisible(true);
-       }catch(Exception e){
-            JOptionPane.showMessageDialog(this, e.getMessage());
-       }
-        
+       if (this.carro == null){
+            JOptionPane.showMessageDialog(this, "Primero configure las llantas y el motor del carro");
+        }
+       else{
+           try{ 
+           this.carro.acelerar(10);
+           VentanaAcelerar acelerar = new VentanaAcelerar(this, true);
+           this.lblContadorVelocidad.setText(this.carro.getVelocidadActual()+" Km/h");
+           acelerar.setVisible(true);
+           }catch(Exception e){
+           JOptionPane.showMessageDialog(this, e.getMessage());
+            }
+       }  
     }//GEN-LAST:event_btnAcelerarMouseClicked
 
     private void btnFrenarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFrenarMouseEntered
@@ -578,14 +593,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFrenoDuroMouseEntered
 
     private void btnFrenoDuroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFrenoDuroMouseClicked
-        try { 
-        this.carro.frenarBruscamente();
-        this.lblContadorVelocidad.setText(this.carro.getVelocidadActual() + " Km/h");
-        VentanaFrenoDuro frenarBrusco = new VentanaFrenoDuro(this, true);
-        frenarBrusco.setVisible(true);
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, e.getMessage());
-    }
+        if (this.carro == null){
+            JOptionPane.showMessageDialog(this, "Primero configure las llantas y el motor del carro");
+        }
+        else{
+            try { 
+            this.carro.frenarBruscamente();
+            this.lblContadorVelocidad.setText(this.carro.getVelocidadActual() + " Km/h");
+            VentanaFrenoDuro frenarBrusco = new VentanaFrenoDuro(this, true);
+            frenarBrusco.setVisible(true);
+            } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            }
+        }
     }//GEN-LAST:event_btnFrenoDuroMouseClicked
 
     private void btnTallerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTallerMouseEntered
@@ -622,7 +642,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnApagarMouseExited
 
     private void btnApagarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnApagarMouseClicked
-        this.carro.apagar();
+        if (this.carro == null){
+            JOptionPane.showMessageDialog(this, "Primero configure las llantas y el motor del carro");
+        }
+        else{
+            try{
+            this.carro.apagar();
+            }catch(VehiculoYaApagadoException e){
+                JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        }
     }//GEN-LAST:event_btnApagarMouseClicked
 
     private void btnEncenderMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEncenderMouseExited
@@ -634,7 +663,30 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEncenderMouseEntered
 
     private void btnEncenderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEncenderMouseClicked
-        this.carro.encender();
+        if (this.carro == null) {
+            JOptionPane.showMessageDialog(this, "Primero configure las llantas y el motor del carro");
+        } else {
+            try {
+                this.carro.encender(); // Puede lanzar VehiculoYaEncendidoException
+
+                // Reproducir sonido en un hilo aparte
+                new Thread(() -> {
+                    try {
+                        File archivoSonido = new File("src/autonoma/simuladorautomovil/sounds/EncenderCarro.wav");
+                        AudioInputStream audioStream = AudioSystem.getAudioInputStream(archivoSonido);
+                        Clip clip = AudioSystem.getClip();
+                        clip.open(audioStream);
+                        clip.start();
+                    } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+                        JOptionPane.showMessageDialog(this, "Error al reproducir el sonido: " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                }).start();
+
+            } catch (VehiculoYaEncendidoException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
+        }
     }//GEN-LAST:event_btnEncenderMouseClicked
     /**
      * Maneja el efecto hover sobre los paneles interactivos

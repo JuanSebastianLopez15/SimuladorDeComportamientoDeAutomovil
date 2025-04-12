@@ -13,6 +13,6 @@ package autonoma.simuladorautomovil.exception;
  */
 public class VehiculoYaApagadoException extends RuntimeException{
     public VehiculoYaApagadoException (){
-        super("No puedes apagar el vehiculo dos veces");
+        super("Un vehículo apagado no se puede apagar de nuevo.");
     }
 }

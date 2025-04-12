@@ -13,6 +13,6 @@ package autonoma.simuladorautomovil.exception;
  */
 public class FrenadoEnDetenidoException extends RuntimeException {
     public FrenadoEnDetenidoException(){
-        super("El vehiculo no puede frenar porque el vehiculo ya esta detenido");
+        super("Un vehículo detenido no se puede frenar, su acción no surte efecto.");
     }
 }
