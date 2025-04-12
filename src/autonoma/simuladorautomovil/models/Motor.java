@@ -1,3 +1,4 @@
+
 package autonoma.simuladorautomovil.models;
 
 public enum Motor {
@@ -7,6 +8,7 @@ public enum Motor {
 
     private final String cilindraje;
     private final int velocidadMaxima;
+    private String nombre;
 
     private Motor(String cilindraje, int velocidadMaxima) {
         this.cilindraje = cilindraje;
@@ -27,4 +29,12 @@ public enum Motor {
     public int getVelocidadMaxima() {
         return velocidadMaxima;
     }
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 }
+

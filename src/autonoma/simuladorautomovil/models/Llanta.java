@@ -1,3 +1,4 @@
+
 package autonoma.simuladorautomovil.models;
 
 public enum Llanta {
@@ -18,6 +19,7 @@ public enum Llanta {
             if (l.nombre.equalsIgnoreCase(nombre)) return l;
         }
         throw new IllegalArgumentException("Tipo de llanta no válido");
+
     }
 
     public String getNombre() {
@@ -28,3 +30,4 @@ public enum Llanta {
         return limitePermitido;
     }
 }
+
