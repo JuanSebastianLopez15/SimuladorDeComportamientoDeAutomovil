@@ -32,6 +32,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDesktopPane1 = new javax.swing.JDesktopPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -43,6 +44,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnSalir = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         btnAcelerar = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -52,11 +56,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnFrenoDuro = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         btnTaller = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
+
+        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
+        jDesktopPane1.setLayout(jDesktopPane1Layout);
+        jDesktopPane1Layout.setHorizontalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jDesktopPane1Layout.setVerticalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -162,6 +174,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         jPanel3.setBackground(new java.awt.Color(51, 51, 51));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        jLabel5.setText("|");
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        jLabel9.setText("|");
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        jLabel10.setText("|");
 
         btnAcelerar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -302,15 +323,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
-        jLabel5.setText("|");
-
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
-        jLabel9.setText("|");
-
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
-        jLabel10.setText("|");
-
         btnTaller.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnTallerMouseClicked(evt);
@@ -399,11 +411,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAcelerarMouseExited
 
     private void btnFrenarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFrenarMouseClicked
-        // TODO add your handling code here:
+        VentanaFrenar frenar = new VentanaFrenar(this, true);
+        frenar.setVisible(true);
     }//GEN-LAST:event_btnFrenarMouseClicked
 
     private void btnAcelerarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcelerarMouseClicked
-        // TODO add your handling code here:
+        VentanaAcelerar acelerar = new VentanaAcelerar(this, true);
+        acelerar.setVisible(true);
     }//GEN-LAST:event_btnAcelerarMouseClicked
 
     private void btnFrenarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFrenarMouseEntered
@@ -423,7 +437,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFrenoDuroMouseEntered
 
     private void btnFrenoDuroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFrenoDuroMouseClicked
-        // TODO add your handling code here:
+        VentanaFrenoDuro frenoDuro = new VentanaFrenoDuro(this, true);
+        frenoDuro.setVisible(true);
     }//GEN-LAST:event_btnFrenoDuroMouseClicked
 
     private void btnTallerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTallerMouseEntered
@@ -485,6 +500,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel btnFrenoDuro;
     private javax.swing.JPanel btnSalir;
     private javax.swing.JPanel btnTaller;
+    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
