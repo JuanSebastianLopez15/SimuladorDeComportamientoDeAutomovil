@@ -1,5 +1,7 @@
 package autonoma.simuladorautomovil.views;
 
+import autonoma.simuladorautomovil.exception.ApagadoVelocidadAltaException;
+import autonoma.simuladorautomovil.exception.FrenadoBruscoLlantasException;
 import autonoma.simuladorautomovil.exception.FrenadoEnDetenidoException;
 import autonoma.simuladorautomovil.exception.FrenadoIntensidadInvalidaException;
 import autonoma.simuladorautomovil.exception.VehiculoApagadoException;
@@ -20,20 +22,42 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
+ * VentanaPrincipal es la ventana principal del simulador de automóviles. Esta
+ * clase es responsable de manejar la interacción con el vehículo, permitir la
+ * configuración y control del automóvil, y mostrar las ventanas emergentes
+ * correspondientes durante la simulación.
  *
  * @author Asus
+ * @version 1.0
+ * @since 2025-04-12
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
+    // Instancia del objeto Vehiculo que representa el automóvil a controlar.
     private Vehiculo carro;
+
+    // Instancia del objeto Taller que se encarga de la configuración del vehículo.
     private Taller taller2;
+
+    // Ventana emergente de taller que se mostrará cuando se necesite.
     private VentanaTaller taller;
+
+    /**
+     * Constructor de la clase VentanaPrincipal.
+     *
+     * Este constructor inicializa los componentes de la ventana principal,
+     * establece la ubicación relativa de la ventana y configura el ícono de la
+     * aplicación.
+     *
+     * @param carro El objeto Vehiculo que se utilizará en esta ventana.
+     * @since 1.0
+     */
     public VentanaPrincipal(Vehiculo carro) {
         initComponents();
         this.setLocationRelativeTo(null);
         try{
             this.setIconImage(new ImageIcon(getClass().getResource("/autonoma/simuladorautomovil/images/LogoCarro.png")).getImage());
         }catch(Exception e){
-            
+            // Se omite el manejo explícito de la excepción para evitar interrupciones visuales.
         }       
     }
 
@@ -545,35 +569,59 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAcelerarMouseExited
 
     private void btnFrenarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFrenarMouseClicked
-        if (this.carro == null){
+        if (this.carro == null) {
             JOptionPane.showMessageDialog(this, "Primero configure las llantas y el motor del carro");
-        }
-        else{
-            try{
-            this.carro.frenar(10);
-            VentanaFrenar frenar = new VentanaFrenar(this, true);
-            this.lblContadorVelocidad.setText(this.carro.getVelocidadActual()+" Km/h");
-            frenar.setVisible(true);
-            }catch(VehiculoApagadoException | FrenadoEnDetenidoException | FrenadoIntensidadInvalidaException e){
-            JOptionPane.showMessageDialog(this, e.getMessage());
+        } else {
+            try {
+                this.carro.frenar(10);
+                this.lblContadorVelocidad.setText(this.carro.getVelocidadActual() + " Km/h");
+                new Thread(() -> {
+                    try {
+                        File archivoSonido = new File("src/autonoma/simuladorautomovil/sounds/FrenarCarro.wav");
+                        AudioInputStream audioStream = AudioSystem.getAudioInputStream(archivoSonido);
+                        Clip clip = AudioSystem.getClip();
+                        clip.open(audioStream);
+                        clip.start();
+                    } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+                        JOptionPane.showMessageDialog(this, "Error al reproducir el sonido: " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                }).start();
+
+                VentanaFrenar frenar = new VentanaFrenar(this, true);
+                frenar.setVisible(true);
+            } catch (VehiculoApagadoException | FrenadoEnDetenidoException | FrenadoIntensidadInvalidaException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
             }
         }
     }//GEN-LAST:event_btnFrenarMouseClicked
 
     private void btnAcelerarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcelerarMouseClicked
-       if (this.carro == null){
+        if (this.carro == null) {
             JOptionPane.showMessageDialog(this, "Primero configure las llantas y el motor del carro");
-        }
-       else{
-           try{ 
-           this.carro.acelerar(10);
-           VentanaAcelerar acelerar = new VentanaAcelerar(this, true);
-           this.lblContadorVelocidad.setText(this.carro.getVelocidadActual()+" Km/h");
-           acelerar.setVisible(true);
-           }catch(Exception e){
-           JOptionPane.showMessageDialog(this, e.getMessage());
+        } else {
+            try {
+                this.carro.acelerar(10);
+                this.lblContadorVelocidad.setText(this.carro.getVelocidadActual() + " Km/h");
+
+                new Thread(() -> {
+                    try {
+                        File archivoSonido = new File("src/autonoma/simuladorautomovil/sounds/AcelerarCarro.wav");
+                        AudioInputStream audioStream = AudioSystem.getAudioInputStream(archivoSonido);
+                        Clip clip = AudioSystem.getClip();
+                        clip.open(audioStream);
+                        clip.start();
+                    } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+                        JOptionPane.showMessageDialog(this, "Error al reproducir el sonido: " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                }).start();
+                VentanaAcelerar acelerar = new VentanaAcelerar(this, true);
+                acelerar.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
             }
-       }  
+        }
     }//GEN-LAST:event_btnAcelerarMouseClicked
 
     private void btnFrenarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFrenarMouseEntered
@@ -593,17 +641,29 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFrenoDuroMouseEntered
 
     private void btnFrenoDuroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFrenoDuroMouseClicked
-        if (this.carro == null){
+        if (this.carro == null) {
             JOptionPane.showMessageDialog(this, "Primero configure las llantas y el motor del carro");
-        }
-        else{
-            try { 
-            this.carro.frenarBruscamente();
-            this.lblContadorVelocidad.setText(this.carro.getVelocidadActual() + " Km/h");
-            VentanaFrenoDuro frenarBrusco = new VentanaFrenoDuro(this, true);
-            frenarBrusco.setVisible(true);
-            } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
+        } else {
+            try {
+                this.carro.frenarBruscamente();
+                this.lblContadorVelocidad.setText(this.carro.getVelocidadActual() + " Km/h");
+                new Thread(() -> {
+                    try {
+                        File archivoSonido = new File("src/autonoma/simuladorautomovil/sounds/FrenarDuroCarro.wav");
+                        AudioInputStream audioStream = AudioSystem.getAudioInputStream(archivoSonido);
+                        Clip clip = AudioSystem.getClip();
+                        clip.open(audioStream);
+                        clip.start();
+                    } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+                        JOptionPane.showMessageDialog(this, "Error al reproducir el sonido: " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                }).start();
+                VentanaFrenoDuro frenarBrusco = new VentanaFrenoDuro(this, true);
+                frenarBrusco.setVisible(true);
+            } catch (FrenadoEnDetenidoException | FrenadoBruscoLlantasException e) {
+                this.lblContadorVelocidad.setText(this.carro.getVelocidadActual() + " Km/h");
+                JOptionPane.showMessageDialog(this, e.getMessage());
             }
         }
     }//GEN-LAST:event_btnFrenoDuroMouseClicked
@@ -642,16 +702,30 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnApagarMouseExited
 
     private void btnApagarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnApagarMouseClicked
-        if (this.carro == null){
+        if (this.carro == null) {
             JOptionPane.showMessageDialog(this, "Primero configure las llantas y el motor del carro");
-        }
-        else{
-            try{
-            this.carro.apagar();
-            }catch(VehiculoYaApagadoException e){
+        } else {
+            try {
+                this.carro.apagar();
+                new Thread(() -> {
+                    try {
+                        File archivoSonido = new File("src/autonoma/simuladorautomovil/sounds/ApagarCarro.wav");
+                        AudioInputStream audioStream = AudioSystem.getAudioInputStream(archivoSonido);
+                        Clip clip = AudioSystem.getClip();
+                        clip.open(audioStream);
+                        clip.start();
+                    } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+                        JOptionPane.showMessageDialog(this, "Error al reproducir el sonido: " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                }).start();
+
+            } catch (VehiculoYaApagadoException | ApagadoVelocidadAltaException e) {
+                this.lblContadorVelocidad.setText(this.carro.getVelocidadActual()+" Km/h");
                 JOptionPane.showMessageDialog(this, e.getMessage());
+            }
         }
-        }
+
     }//GEN-LAST:event_btnApagarMouseClicked
 
     private void btnEncenderMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEncenderMouseExited

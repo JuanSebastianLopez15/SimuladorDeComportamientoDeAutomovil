@@ -13,7 +13,7 @@ package autonoma.simuladorautomovil.exception;
  */
 public class ApagadoVelocidadAltaException extends RuntimeException {
     public ApagadoVelocidadAltaException(){
-        super("Se apago el vehiculo y la velocidad es superior a los 60 Km/h, se accidentara");
+        super("Usted apago el vehiculo y la velocidad es superior a los 60 Km/h, se accidentara");
     }
     
 }
