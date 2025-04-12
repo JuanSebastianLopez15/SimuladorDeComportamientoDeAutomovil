@@ -1,36 +1,33 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package autonoma.simuladorautomovil.models;
 
-/**
- *
- * @author Asus
- */
-public class Llanta {
-    private float limitePermitido;
-    private String nombre;
+public enum Llanta {
+    BUENAS("Buenas", 110),
+    BONITAS("Bonitas", 70),
+    BARATAS("Baratas", 50);
 
-    public Llanta(float limitePermitido) {
+    private final String nombre;
+    private final int limitePermitido;
+
+    private Llanta(String nombre, int limitePermitido) {
+        this.nombre = nombre;
         this.limitePermitido = limitePermitido;
     }
 
-    public float getLimitePermitido() {
-        return limitePermitido;
-    }
+    public static Llanta porNombre(String nombre) {
+        for (Llanta l : values()) {
+            if (l.nombre.equalsIgnoreCase(nombre)) return l;
+        }
+        throw new IllegalArgumentException("Tipo de llanta no válido");
 
-    public void setLimitePermitido(float limitePermitido) {
-        this.limitePermitido = limitePermitido;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public int getLimitePermitido() {
+        return limitePermitido;
     }
-    
-    
 }
+

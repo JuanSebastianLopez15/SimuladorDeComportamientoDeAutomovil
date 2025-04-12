@@ -1,17 +1,34 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package autonoma.simuladorautomovil.models;
 
-/**
- *
- * @author Asus
- */
-public class Motor {
-    private float velocidadMaxima;
+public enum Motor {
+    MIL_CC("1000", 100),
+    DOSMIL_CC("2000", 160),
+    TRESMIL_CC("3000", 220);
+
+    private final String cilindraje;
+    private final int velocidadMaxima;
     private String nombre;
 
+    private Motor(String cilindraje, int velocidadMaxima) {
+        this.cilindraje = cilindraje;
+        this.velocidadMaxima = velocidadMaxima;
+    }
+
+    public static Motor porCilindraje(String cilindraje) {
+        for (Motor m : values()) {
+            if (m.cilindraje.equalsIgnoreCase(cilindraje)) return m;
+        }
+        throw new IllegalArgumentException("Cilindraje no válido");
+    }
+
+    public String getCilindraje() {
+        return cilindraje;
+    }
+
+    public int getVelocidadMaxima() {
+        return velocidadMaxima;
+    }
     public String getNombre() {
         return nombre;
     }
@@ -19,17 +36,5 @@ public class Motor {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-    public Motor(float velocidadMaxima) {
-        this.velocidadMaxima = velocidadMaxima;
-    }
-
-    public float getVelocidadMaxima() {
-        return velocidadMaxima;
-    }
-
-    public void setVelocidadMaxima(float velocidadMaxima) {
-        this.velocidadMaxima = velocidadMaxima;
-    }
-    
 }
+
