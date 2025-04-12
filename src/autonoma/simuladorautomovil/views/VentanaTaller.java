@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
  * configurar el vehículo seleccionando las llantas y el motor. 
  * También proporciona la opción de actualizar los valores de configuración del vehículo.
  * 
- * @author Asus
+ * @author  Cristian Camilo Salazar Arenas, Juan Sebastian Lopez Guzman
  * @version 1.0
  * @since   2025-04-12
  */

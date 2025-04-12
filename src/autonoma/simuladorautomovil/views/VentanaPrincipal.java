@@ -27,7 +27,7 @@ import javax.swing.JPanel;
  * configuración y control del automóvil, y mostrar las ventanas emergentes
  * correspondientes durante la simulación.
  *
- * @author Asus
+ * @author Cristian Camilo Salazar Arenas, Juan Sebastian Lopez Guzman
  * @version 1.0
  * @since 2025-04-12
  */

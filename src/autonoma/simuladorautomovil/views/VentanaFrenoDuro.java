@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
  * Esta clase representa una ventana emergente (JDialog) que se muestra cuando se activa un frenado fuerte del vehículo.
  * La ventana muestra una animación de un automóvil frenando y se cierra al hacer clic en la imagen.
  * 
- * @author  Asus
+ * @author  Cristian Camilo Salazar Arenas, Juan Sebastian Lopez Guzman
  * @version 1.0
  * @since   2025-04-11
  */
