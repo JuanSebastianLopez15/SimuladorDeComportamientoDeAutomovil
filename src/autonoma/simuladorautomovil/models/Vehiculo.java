@@ -24,9 +24,11 @@ public class Vehiculo {
     private Llanta llanta;
     private Motor motor;
 
-    public Vehiculo() {
+    public Vehiculo(Motor motor, Llanta llanta) {
         this.velocidadActual = 0;
         this.vehiculoEncendido = false;
+        this.llanta=llanta;
+        this.motor=motor;
     }
     public void encender() {
         if (vehiculoEncendido) {

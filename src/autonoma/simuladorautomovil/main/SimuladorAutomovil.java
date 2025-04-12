@@ -17,11 +17,10 @@ import autonoma.simuladorautomovil.exception.ConfiguracionInvalidaException;
 public class SimuladorAutomovil {
     public static void main(String[] args)throws ConfiguracionInvalidaException {
         
-      Taller taller = new Taller();
+        Taller taller = new Taller();
         try {
             Vehiculo auto = taller.configurarVehiculo();
-            taller.actualizarConfiguracion(auto);
-            VentanaPrincipal ventana = new VentanaPrincipal(carro);
+            VentanaPrincipal ventana = new VentanaPrincipal(auto);
             ventana.setVisible(true);
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());

@@ -20,12 +20,16 @@ public class Taller {
     }
 
     private Vehiculo procesarConfiguracion(ArrayList<String> lineas) throws ConfiguracionInvalidaException {
+        
         String lineaLlanta = lineas.get(0);
         String [] infoLineaLlanta = lineaLlanta.split(" ");
         String lineaMotor = lineas.get(1);
         String [] infoLineaMotor = lineaMotor.split(" ");
         String llantas = infoLineaLlanta[1];
         String motor = infoLineaMotor[1];
+        System.out.println(llantas);
+        System.out.println(motor);
+        System.out.println(Llanta.porNombre(llantas));
         if (llantas == null || motor == null) throw new ConfiguracionInvalidaException("Configuración incompleta");
         try {
             return new Vehiculo(Motor.porCilindraje(motor), Llanta.porNombre(llantas));
@@ -36,8 +40,8 @@ public class Taller {
 
     public void actualizarConfiguracion(Vehiculo vehiculo) throws IOException {
         ArrayList<String> lineas = new ArrayList<>();
-        lineas.add("llantas " + vehiculo.getLlantas().getNombre());
+        lineas.add("llantas " + vehiculo.getLlanta().getNombre());
         lineas.add("motor " + vehiculo.getMotor().getCilindraje());
-        escritor.escribir(lineas, "Carro.txt");
+        escritor.escribir(lineas, "/main/resources/autonoma/simuladorautomovil/file/Carro.txt");
     }
 }
